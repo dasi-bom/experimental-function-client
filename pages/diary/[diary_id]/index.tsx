@@ -1,10 +1,10 @@
 import React from 'react';
-import TestContainer from 'container/test/TestContainer';
+import DiarySingleContainer from 'container/DiarySingleContainer';
 
 const index = () => {
   return (
     <>
-      <TestContainer />
+      <DiarySingleContainer />
     </>
   );
 };

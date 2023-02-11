@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
-import HomeContainer from 'container/home/HomeContainer';
+import DiaryListContainer from 'container/DiaryListContainer';
 
 // 기본 페이지, 메인
 const Home: NextPage = () => {
   return (
     <>
-      <HomeContainer />
+      <DiaryListContainer />
     </>
   );
 };
