@@ -2,12 +2,13 @@ import React from 'react';
 
 // components
 import Header from '../Header';
+import { LayoutWrapper } from './styled';
 
 const Layout = ({ children }: any) => {
   return (
     <>
       <Header />
-      {children}
+      <LayoutWrapper>{children}</LayoutWrapper>
     </>
   );
 };
