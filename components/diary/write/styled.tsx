@@ -142,5 +142,6 @@ export const DiaryWriteWrapper = styled.div`
     padding: 15px 10px 0 10px;
     text-align:center;
     font-size:12px;
+    font-weight: 600;
   }
 `;
