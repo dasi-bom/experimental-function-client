@@ -14,6 +14,25 @@ interface IProps {
 const DiaryWrite = ({ diaryId }: IProps) => {
   console.log('diaryId ==> ', diaryId);
 
+  // 서버로 보내기 위한 useState
+  const [diaryForm, setDiaryForm] = useState({
+    title: '',
+    content: ''
+  });
+
+  const { title, content } = diaryForm;
+  const onChange = (e: { target: { value: any; name: any; }; }) => {
+    // 이벤트를 부른 요소의 value와 name 키의 값 가져오기
+    // name은 title or content
+    // value는 그 때의 텍스트
+    const { value, name } = e.target;
+
+    setDiaryForm({
+      ...diaryForm, // 기존 input 객체를 복사한 뒤
+      [name]: value // title or content 키를 가진 값을 value로 설정
+    });
+  };
+
   // return <>{diaryId ? <h1>일기 수정 페이지</h1> : <h1>일기 작성 페이지</h1>}</>;
   
   return (
@@ -29,11 +48,25 @@ const DiaryWrite = ({ diaryId }: IProps) => {
         </div>
         <div className="write-title">
           <span>제목</span>
-          <input type="text" className="inputfield-title" placeholder="ex) 곰곰이와 0일째"></input>
+          <input 
+            name="title" 
+            value={title} 
+            type="text" 
+            className="inputfield-title" 
+            placeholder="ex) 곰곰이와 0일째"
+            onChange={onChange}
+          />
         </div>
         <div className="write-content">
           <span>본문</span>
-          <input type="text" className="inputfield-content" placeholder=""></input>
+          <textarea 
+            name="content" 
+            value={content}
+            className="inputfield-content" 
+            placeholder="자유롭게 작성하세요:)"
+            onChange={onChange}
+          >
+          </textarea>
         </div>
         <div className="write-photo">
           <span>사진</span>
@@ -47,20 +80,18 @@ const DiaryWrite = ({ diaryId }: IProps) => {
           <label 
             className="photo-label" 
             htmlFor="profileImg"
-          >
-            <AiFillPlusCircle></AiFillPlusCircle></label>
+          ><img style={{ width: '40px' }} src="/images/add-photo.png" id="image" />
+          </label>
         </div>
         <div className="write-stamp">
           <span>다시 봄 스탬프</span>
         </div>
         <div className="write-stamp-inner">
-          <input type="checkbox" className="stamp-btn1" autoComplete="off"></input>
-          <label htmlFor="stamp-btn1"><AiFillSmile></AiFillSmile></label>
-          <input type="checkbox" className="stamp-btn2" autoComplete="off"></input>
-          <label htmlFor="stamp-btn1"><AiFillMeh></AiFillMeh></label>
-          <input type="checkbox" className="stamp-btn3" autoComplete="off"></input>
-          <label htmlFor="stamp-btn1"><AiFillFrown></AiFillFrown></label>
-        </div>
+        <img src="/images/stamp1.png"/>
+        <img src="/images/stamp2.png"/>
+        <img src="/images/stamp3.png"/>
+        <img src="/images/stamp4.png"/>
+        </div><br/><br/>
         <div className="upload-btn" onClick={() => {}}>
             등록
         </div>

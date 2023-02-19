@@ -61,6 +61,7 @@ export const DiaryWriteWrapper = styled.div`
     background-color:white;
     width:100%;
     height: 45px;
+    border: 1.5px solid grey;
    }
  }
    .write-content {
@@ -85,7 +86,7 @@ export const DiaryWriteWrapper = styled.div`
  }
  .write-photo {
     width: 100%;
-    height: 100px;
+    height: 125px;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -98,7 +99,7 @@ export const DiaryWriteWrapper = styled.div`
         font-weight: 600;
    }
    .photo-label {
-    margin: 15px 15px 30px 50px;
+    margin: 5px 15px 30px 40px;
     font-weight: bold;
     font-size: 15px;
     color: #0095f6;
@@ -112,7 +113,7 @@ export const DiaryWriteWrapper = styled.div`
  }
  .write-stamp {
     width: 100%;
-    height: 55px;
+    height: 60px;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -127,18 +128,9 @@ export const DiaryWriteWrapper = styled.div`
  }
  .write-stamp-inner {
     width: 100%;
-    height: 55px;
+    height: 35px;
     display: flex;
     justify-content: space-evenly;
-   .stamp-btn1 {
-   
-   }
-   .stamp-btn2 {
-    
-   }
-   .stamp-btn3 {
-    
-   }
  }
  .upload-btn {
     background-color: #ffa;
