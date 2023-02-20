@@ -27,6 +27,12 @@ export const DiarySingleAgainWrapper = styled.div`
     border-radius: 13px;
     margin: 0px auto;
   }
+  .again-image2 {
+    background-image: url('../../../images/lucky2.jpg');
+  }
+  .again-image3 {
+    background-image: url('../../../images/lucky3.jpg');
+  }
 
   .again-content-wrap {
     width: 241px;
