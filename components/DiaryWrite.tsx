@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 // style
 import { DiaryWriteWrapper } from './diary/write/styled';
 
-// axios
+// axios(서버연결)
 import axios from 'axios';
 
 interface IProps {
@@ -14,47 +14,44 @@ interface IProps {
 const DiaryWrite = ({ diaryId }: IProps) => {
   console.log('diaryId ==> ', diaryId);
 
-  // 서버로 보내기 위한 State 선언
-  const [data,setData] = useState([]);
+  // state 선언
   const [diaryForm, setDiaryForm] = useState({ title: '', content: '' });
-  const { title, content } = diaryForm; // 비구조화 할당을 통해 값 추출
-  const [file, setFile] = useState();
-  const [stamptype, setStampType] = useState([]);
+  const [file, setFile] = useState([]);
+  const [stamptype, setStampType] = useState<any>([]);
 
-  // title과 content
-  const handlediaryformChange = (e: { target: { name: any; value: any; }; }) => {
+  // diaryForm(title과 content)
+  const handlediaryformChange = (e: any) => {
     setDiaryForm({
       ...diaryForm, 
       [e.target.name]: e.target.value
     });
+    console.log(diaryForm); // title, content 확인 완료(단독시)
   };
-
-   // const handlediaryformChange = (event: { preventDefault: () => void; target: { value: React.SetStateAction<{ title: string; content: string; }>; }; }) => {
-  //   event.preventDefault();
-  //   setDiaryForm(event.target.value);
-  // };
-
-  // image file
-  const onChangeImg = (e:React.ChangeEvent<HTMLInputElement>) => {
+  
+  // file(image file)
+  const handlefileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const formData = new FormData();
     
     if (e.target.files) {
       const uploadFile = e.target.files[0];
       formData.append('file', uploadFile);
-      setFile(uploadFile);
-      console.log(uploadFile);
-      // console.log('===useState===');
-      // console.log(file);
+      setFile(file);
+      console.log(uploadFile); // file 확인 완료(단독시)
     }
   };
 
-  // stamp 
+  // stamptype(stamp) 
   const handlestamptypeChange = (e: any) => {
-    setStampType([...stamptype,])
+    setStampType([...stamptype,]);
+    // console.log(e.currentTarget.dataset); // stamptype 확인 완료(단독시)
+    const { type } = e.currentTarget.dataset;
+    let tmpArr = [...stamptype];
+    tmpArr.push({ stampType: type });
+    console.log(tmpArr);
   };
  
-  // 등록 click시
+  // 등록 onClick시 서버로 전송
   const onClickSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     const formData = new FormData();
@@ -63,6 +60,7 @@ const DiaryWrite = ({ diaryId }: IProps) => {
     formData.append('file', file);
     formData.append('stamptype', stamptype);
 
+    // 서버로 보내는 API
     axios({
       method: 'post',
       url: 'http://localhost:3000/DiaryWrite',
@@ -76,11 +74,6 @@ const DiaryWrite = ({ diaryId }: IProps) => {
  console.log('일기 등록에 실패했습니다.');
     console.log(error);   
   });
-  };
-
-  // 잘 등록됐는지 확인
-  const onPrint = () => {
-    console.log(file);
   };
 
   // return <>{diaryId ? <h1>일기 수정 페이지</h1> : <h1>일기 작성 페이지</h1>}</>;
@@ -99,8 +92,7 @@ const DiaryWrite = ({ diaryId }: IProps) => {
         <div className="write-title">
           <span>제목</span>
           <input 
-            name="title" 
-            value={title} 
+            name="title"  
             type="text" 
             className="inputfield-title" 
             placeholder="ex) 곰곰이와 0일째"
@@ -111,7 +103,6 @@ const DiaryWrite = ({ diaryId }: IProps) => {
           <span>본문</span>
           <textarea 
             name="content" 
-            value={content}
             className="inputfield-content" 
             placeholder="자유롭게 작성하세요:)"
             onChange={handlediaryformChange}
@@ -132,7 +123,7 @@ const DiaryWrite = ({ diaryId }: IProps) => {
             accept="image/*"
             multiple={true} 
             id="profileImg"
-            onChange={onChangeImg}
+            onChange={handlefileChange}
           ></input>
         </div>
         </form>
@@ -140,25 +131,18 @@ const DiaryWrite = ({ diaryId }: IProps) => {
           <span>다시 봄 스탬프</span>
         </div>
         <div className="write-stamp-inner">
-        <img src="/images/stamp1.png"/>
-        <img src="/images/stamp2.png"/>
-        <img src="/images/stamp3.png"/>
-        <img src="/images/stamp4.png"/>
+        <img src="/images/stamp4.png" data-type={'WALK'} onClick={handlestamptypeChange}/>
+        <img src="/images/stamp1.png" data-type={'TREAT'} onClick={handlestamptypeChange}/>
+        <img src="/images/stamp3.png" data-type={'TOY'} onClick={handlestamptypeChange}/>
+        <img src="/images/stamp2.png" data-type={'TRAVEL'} onClick={handlestamptypeChange}/>
         </div><br/><br/>
-        <div className="upload-btn" onClick={onClickSubmit}>
+
+        <div className="upload-btn" onClick={handlestamptypeChange}>
             등록
         </div>
-        <button onClick={onPrint}>보기</button>
       </div>
     </DiaryWriteWrapper>
   );
 };
 
 export default DiaryWrite;
-function setFile(uploadFile: any) {
-  throw new Error('Function not implemented.');
-}
-
-function setPerson(arg0: any) {
-  throw new Error('Function not implemented.');
-}
