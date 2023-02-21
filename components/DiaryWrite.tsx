@@ -36,18 +36,18 @@ const DiaryWrite = ({ diaryId }: IProps) => {
     if (e.target.files) {
       const uploadFile = e.target.files[0];
       formData.append('file', uploadFile);
-      setFile(file);
+      setFile(uploadFile);
       console.log(uploadFile); // file 확인 완료(단독시)
     }
   };
 
   // stamptype(stamp) 
   const handlestamptypeChange = (e: any) => {
-    setStampType([...stamptype,]);
     // console.log(e.currentTarget.dataset); // stamptype 확인 완료(단독시)
     const { type } = e.currentTarget.dataset;
     let tmpArr = [...stamptype];
     tmpArr.push({ stampType: type });
+    setStampType(tmpArr);
     console.log(tmpArr);
   };
  
@@ -57,7 +57,7 @@ const DiaryWrite = ({ diaryId }: IProps) => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
-    formData.append('file', file);
+    formData.append('file', file[0]);
     formData.append('stamptype', stamptype);
 
     // 서버로 보내는 API
