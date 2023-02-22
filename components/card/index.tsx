@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { DiaryCardWrapper } from './styled';
 
 // axios(서버연결)
-// import axios from 'axios';
+import axios from 'axios';
 
 const DiaryCard = () => {
   const router = useRouter();
@@ -25,13 +25,13 @@ const DiaryCard = () => {
   };
 
   // 삭제 handle
-  // const handleDelete = () => {
-  //     axios.delete(`/api/admin/hero?id=${props.match.params.id}`)
-  //       .then((response: { data: any; }) => {
-  //         console.log(response.data);
-  //         props.history.push('/heroes/hero'); // this.props.router.push('/heroes/hero'); 3.0.0+
-  //       });
-  // };
+  const handleDelete = () => {
+      axios.delete(`/api/admin/hero?id=${props.match.params.id}`)
+        .then((response: { data: any; }) => {
+          console.log(response.data);
+          props.history.push('/heroes/hero'); // this.props.router.push('/heroes/hero'); 3.0.0+
+        });
+  };
 
   return (
     <DiaryCardWrapper>
