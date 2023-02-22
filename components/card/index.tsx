@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 
 // style
 import { DiaryCardWrapper } from './styled';
 
+// axios(서버연결)
+// import axios from 'axios';
+
 const DiaryCard = () => {
+  const router = useRouter();
   const [active, setActive] = useState<boolean>(false);
 
   const stampHandler = () => {
@@ -20,13 +25,13 @@ const DiaryCard = () => {
   };
 
   // 삭제 handle
-  const handleDelete = () => {
-      api.delete(`/api/admin/hero?id=${props.match.params.id}`)
-        .then((response: { data: any; }) => {
-          console.log(response.data);
-          props.history.push('/heroes/hero'); // this.props.router.push('/heroes/hero'); 3.0.0+
-        });
-  };
+  // const handleDelete = () => {
+  //     axios.delete(`/api/admin/hero?id=${props.match.params.id}`)
+  //       .then((response: { data: any; }) => {
+  //         console.log(response.data);
+  //         props.history.push('/heroes/hero'); // this.props.router.push('/heroes/hero'); 3.0.0+
+  //       });
+  // };
 
   return (
     <DiaryCardWrapper>
@@ -48,9 +53,9 @@ const DiaryCard = () => {
               <div className="stamp" />
             </div>
             <div className="button-wrap">
-              <button onClick={handleEditMode}>수정</button>
+              <button onClick={() => router.push('../DiaryWriteUpdate.tsx')}>수정</button>
               <span>/</span>
-              <button onClick={handleDelete}>삭제</button>
+              <button onClick={() => {}}>삭제</button>
             </div>
           </div>
         </div>

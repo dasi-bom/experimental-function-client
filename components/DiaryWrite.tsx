@@ -25,7 +25,7 @@ const DiaryWrite = ({ diaryId }: IProps) => {
       ...diaryForm, 
       [e.target.name]: e.target.value
     });
-    console.log(diaryForm); // title, content 확인 완료(단독시)
+    console.log(diaryForm); 
   };
   
   // file(image file)
@@ -39,16 +39,16 @@ const DiaryWrite = ({ diaryId }: IProps) => {
     // file 서버로 전송
     const formData = new FormData();
     formData.append('photo', e.target.files[0], e.target.files[0].name);
-    api.post('/api/admin/photo', formData)
-      .then((response: { data: { data: React.SetStateAction<never[]>; }; }) => {
-        console.log(response.data);
-        setFile(response.data.data);
-      });
+    // axios.post('/api/admin/photo', formData)
+    //   .then((response: { data: { data: React.SetStateAction<never[]>; }; }) => {
+    //     console.log(response.data);
+    //     setFile(response.data.data);
+    //   });
   };
 
   // stamptype(stamp) 
   const handlestamptypeChange = (e: any) => {
-    // console.log(e.currentTarget.dataset); // stamptype 확인 완료(단독시)
+    // console.log(e.currentTarget.dataset); // 
     const { type } = e.currentTarget.dataset;
     let tmpArr = [...stamptype];
     tmpArr.push({ stampType: type });
@@ -57,58 +57,34 @@ const DiaryWrite = ({ diaryId }: IProps) => {
   };
  
   // 등록 onClick시 서버로 전송
-  const submit = (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
+  // const submit = (e: { preventDefault: () => void; }) => {
+  //   e.preventDefault();
 
-    // 각 input별 글자수 등 제한두기
-    const form = document.getElementById('form');
-    console.log(form.checkValidity());
-    if (!form.checkValidity()) {
-      form.classList.add('was-validated');
-      return;
-    }
+  //   // 각 input별 글자수 등 제한두기
+  //   const form = document.getElementById('form');
+  //   console.log(form.checkValidity());
+  //   if (!form.checkValidity()) {
+  //     form.classList.add('was-validated');
+  //     return;
+  //   }
     
-    const sendForm = { diaryForm, file, stamptype };
-    console.log(sendForm);
+  //   const sendForm = { diaryForm, file, stamptype };
+  //   console.log(sendForm);
     
-    api.post('/api/admin/hero', sendForm)
-      .then((response: { data: any; }) => {
-        console.log(response.data);
-        // form 초기화
-        setDiaryForm('');
-        setFile('');
-        setStampType({
-          WALK: false,
-          TREAT: false,
-          TOY: false,
-          TRAVEL: false
-        });
-      });
-  };
-
-//   const onClickSubmit = (event: { preventDefault: () => void; }) => {
-//     event.preventDefault();
-//     const formData = new FormData();
-//     formData.append('title', title);
-//     formData.append('content', content);
-//     formData.append('file', file[0]);
-//     formData.append('stamptype', stamptype);
-
-//     // 서버로 보내는 API
-//     axios({
-//       method: 'post',
-//       url: 'http://localhost:3000/DiaryWrite',
-//       data: formData,
-//     })
-//     .then((result) => {
-//  console.log('일기 등록에 성공했습니다.');
-//     console.log(result);
-//   })
-//     .catch((error) => {
-//  console.log('일기 등록에 실패했습니다.');
-//     console.log(error);   
-//   });
-//   };
+  //   axios.post('/api/admin/hero', sendForm)
+  //     .then((response: { data: any; }) => {
+  //       console.log(response.data);
+  //       // form 초기화
+  //       setDiaryForm('');
+  //       setFile('');
+  //       setStampType({
+  //         WALK: false,
+  //         TREAT: false,
+  //         TOY: false,
+  //         TRAVEL: false
+  //       });
+  //     });
+  // };
 
   // return <>{diaryId ? <h1>일기 수정 페이지</h1> : <h1>일기 작성 페이지</h1>}</>;
   
@@ -124,7 +100,7 @@ const DiaryWrite = ({ diaryId }: IProps) => {
           임보 동물과 함께 할 수 있는 나만의 놀이를 알려주세요~
         </div>
         {/* input값 받는 곳부터 form 형식 */}
-        <form onSubmit={submit} noValidate id="form">
+        {/* <form onSubmit={submit} noValidate id="form"> */}
         <div className="write-title">
           <span>제목</span>
           <input 
@@ -180,7 +156,7 @@ const DiaryWrite = ({ diaryId }: IProps) => {
         {/* input값 모두 받았는지 확인 */}
         {JSON.stringify({
         diaryForm, file, stamptype })}
-        </form>
+        {/* </form> */}
       </div>
     </DiaryWriteWrapper>
   );
