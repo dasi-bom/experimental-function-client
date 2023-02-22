@@ -14,6 +14,20 @@ const DiaryCard = () => {
     }
   };
 
+  // 수정 handle
+  const handleEditMode = (e: any) => {
+    setActive(!active);
+  };
+
+  // 삭제 handle
+  const handleDelete = () => {
+      api.delete(`/api/admin/hero?id=${props.match.params.id}`)
+        .then((response: { data: any; }) => {
+          console.log(response.data);
+          props.history.push('/heroes/hero'); // this.props.router.push('/heroes/hero'); 3.0.0+
+        });
+  };
+
   return (
     <DiaryCardWrapper>
       <div className="card-wrap">
@@ -34,9 +48,9 @@ const DiaryCard = () => {
               <div className="stamp" />
             </div>
             <div className="button-wrap">
-              <button>수정</button>
+              <button onClick={handleEditMode}>수정</button>
               <span>/</span>
-              <button>삭제</button>
+              <button onClick={handleDelete}>삭제</button>
             </div>
           </div>
         </div>

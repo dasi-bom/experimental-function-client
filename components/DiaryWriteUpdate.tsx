@@ -11,13 +11,78 @@ interface IProps {
   diaryId: any;
 }
 
-const DiaryWrite = ({ diaryId }: IProps) => {
+const DiaryWriteUpdate = ({ diaryId }: IProps) => {
   console.log('diaryId ==> ', diaryId);
 
   // state 선언
   const [diaryForm, setDiaryForm] = useState({ title: '', content: '' });
   const [file, setFile] = useState([]);
   const [stamptype, setStampType] = useState<any>([]);
+
+  // 데이터 가져오는 부분
+  useEffect(() => {
+    getHero(props.id)
+  }, [props.id])
+ 
+  const getHero = async (id) => {
+    let response = await api.get(`/api/user/hero/${id}`);
+    console.log(response);
+ 
+    const hero = response.data;
+ 
+    setName(hero.name);
+    setEmail(hero.email);
+    // hero = { ..., sex: 'female' }
+    const sex = {
+      male: false,
+      female: false
+    };
+    sex[hero.sex] = true;
+    setSex(sex);
+    // hero = { ..., powers: ['flying', 'strength'] }
+    const powers = {
+      flying: false,
+      penetration: false,
+      hacking: false,
+      strength: false
+    };
+    hero.powers.forEach(power => {
+      powers[power.name] = true;
+    });
+    setPowers(powers);
+    setCountry(hero.country);
+    setAddress(hero.address);
+    setPhoto(hero.photo);
+  }
+
+    // 등록 onClick시 서버로 전송
+    const submit = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+    
+        // 각 input별 글자수 등 제한두기
+        const form = document.getElementById('form');
+        console.log(form.checkValidity());
+        if (!form.checkValidity()) {
+          form.classList.add('was-validated');
+          return;
+        }
+        
+        const sendForm = { id: props.id, diaryForm, file, stamptype: [] };
+        // stamptype: 객체 => 스트링 배열로 변환
+    for (let key in stamptype) {
+        if (stamptype[key]) {
+          sendForm.stamptype.push(key);
+        }
+      }
+        console.log(sendForm);
+        
+        api.post('/api/admin/hero', sendForm)
+          .then((response: { data: any; }) => {
+            console.log(response.data);
+            // form 초기화
+            alert('수정되었습니다');
+          });
+    };  
 
   // diaryForm(title과 content)
   const handlediaryformChange = (e: any) => {
@@ -38,8 +103,8 @@ const DiaryWrite = ({ diaryId }: IProps) => {
     }
     // file 서버로 전송
     const formData = new FormData();
-    formData.append('photo', e.target.files[0], e.target.files[0].name);
-    api.post('/api/admin/photo', formData)
+    formData.append('file', e.target.files[0], e.target.files[0].name);
+    api.post('/api/admin/file', formData)
       .then((response: { data: { data: React.SetStateAction<never[]>; }; }) => {
         console.log(response.data);
         setFile(response.data.data);
@@ -55,60 +120,6 @@ const DiaryWrite = ({ diaryId }: IProps) => {
     setStampType(tmpArr);
     console.log(tmpArr);
   };
- 
-  // 등록 onClick시 서버로 전송
-  const submit = (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
-
-    // 각 input별 글자수 등 제한두기
-    const form = document.getElementById('form');
-    console.log(form.checkValidity());
-    if (!form.checkValidity()) {
-      form.classList.add('was-validated');
-      return;
-    }
-    
-    const sendForm = { diaryForm, file, stamptype };
-    console.log(sendForm);
-    
-    api.post('/api/admin/hero', sendForm)
-      .then((response: { data: any; }) => {
-        console.log(response.data);
-        // form 초기화
-        setDiaryForm('');
-        setFile('');
-        setStampType({
-          WALK: false,
-          TREAT: false,
-          TOY: false,
-          TRAVEL: false
-        });
-      });
-  };
-
-//   const onClickSubmit = (event: { preventDefault: () => void; }) => {
-//     event.preventDefault();
-//     const formData = new FormData();
-//     formData.append('title', title);
-//     formData.append('content', content);
-//     formData.append('file', file[0]);
-//     formData.append('stamptype', stamptype);
-
-//     // 서버로 보내는 API
-//     axios({
-//       method: 'post',
-//       url: 'http://localhost:3000/DiaryWrite',
-//       data: formData,
-//     })
-//     .then((result) => {
-//  console.log('일기 등록에 성공했습니다.');
-//     console.log(result);
-//   })
-//     .catch((error) => {
-//  console.log('일기 등록에 실패했습니다.');
-//     console.log(error);   
-//   });
-//   };
 
   // return <>{diaryId ? <h1>일기 수정 페이지</h1> : <h1>일기 작성 페이지</h1>}</>;
   
@@ -175,7 +186,7 @@ const DiaryWrite = ({ diaryId }: IProps) => {
         <img src="/images/stamp2.png" data-type={'TRAVEL'} onClick={handlestamptypeChange}/>
         </div><br/><br/>
         <div className="upload-btn">
-        <button type="submit">등록</button>
+        <button type="submit">수정</button>
         </div>
         {/* input값 모두 받았는지 확인 */}
         {JSON.stringify({
