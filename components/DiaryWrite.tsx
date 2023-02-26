@@ -7,6 +7,9 @@ import { DiaryWriteWrapper } from './diary/write/styled';
 // axios(서버연결)
 import axios from 'axios';
 
+// services
+import { createDiary } from 'services/diary';
+
 interface IProps {
   diaryId: any;
 }
@@ -84,6 +87,42 @@ const DiaryWrite = ({ diaryId }: IProps) => {
           TRAVEL: false
         });
   };
+
+  // 📌📌📌📌📌📌📌📌📌 230224 axios 요청 예시 📌📌📌📌📌📌📌📌📌
+  // const [requestDto, setRequestDto] = useState<any>({
+  //   pet: { petName: '' },
+  //   title: '',
+  //   content: '',
+  //   stamps: [{ stampType: '' }],
+  // });
+  // const [file, setFile] = useState([]);
+  // const [thumbnail, setThumbnail] = useState<any>();
+
+  // const uploadImage = (e: any) => {
+  //   setFile(e.target.files);
+
+  //   const preview = URL.createObjectURL(e.target.files[0]);
+  //   setThumbnail(preview);
+  // };
+
+  // const submitDiaryForm = () => {
+  //   const fd = new FormData();
+
+  //   Array.from(file).map((file: any, key: number) => {
+  //     fd.append('multipartFile', file);
+  //   });
+
+  //   fd.append('requestDto', requestDto);
+
+  //   createDiary(fd)
+  //     .then((res) => {
+  //       console.log(res);
+  //       // if 요청 성공시 처리할 코드 else 요청 실패
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // };
 
   // return <>{diaryId ? <h1>일기 수정 페이지</h1> : <h1>일기 작성 페이지</h1>}</>;
   
