@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
 
 // style
 import { DiaryCardWrapper } from './styled';
@@ -47,7 +46,7 @@ const DiaryCard = ({ item }: IProps) => {
         <div className="content-wrap">
           <div className="content-inner">
             <h3 className="title">#단추처럼 #생긴 #코</h3>
-            <div className="diary-images" onClick={() => router.push(`/diary/${item.petId}`)}/>
+            <div className="diary-images" onClick={() => router.push(`/diary/${item.petId}`)} />
 
             <p className="content">우리 곰곰이는 털도 매력이지만 코가 귀엽다</p>
           </div>

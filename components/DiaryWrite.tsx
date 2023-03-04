@@ -1,11 +1,8 @@
 /* eslint-disable padded-blocks */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // style
 import { DiaryWriteWrapper } from './diary/write/styled';
-
-// axios(서버연결)
-import axios from 'axios';
 
 // services
 import { createDiary } from 'services/diary';
@@ -15,53 +12,85 @@ interface IProps {
 }
 
 const DiaryWrite = ({ diaryId }: IProps) => {
-  console.log('diaryId ==> ', diaryId);
+  // console.log('diaryId ==> ', diaryId);
 
   // state 선언
+  const [pet, setPet] = useState('곰곰');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [file, setFile] = useState<any>([]);
   const [stamps, setStamps] = useState<any>([]);
-  
+
+  const [requestDto, setRequestDto] = useState<any>({
+    pet: { petName: '' },
+    title: '',
+    content: '',
+    stamps: [],
+  });
+
+  // requestDto = {
+  //   pet: { petName: string },
+  //   title: string,
+  //   content: string,
+  //   stamps: [
+  //     { stampType: string }, { stampType: string }
+  //   ],
+  // }
+
+  // multipartFile: images
+
   // title
   const handleTitle = (e: any) => {
     e.preventDefault();
     setTitle(e.target.value);
+    console.log(e.target.value);
   };
 
   // content
   const handleContent = (e: any) => {
     e.preventDefault();
     setContent(e.target.value);
+    console.log(e.target.value);
   };
-  
+
   // file
-  const handleFile = (e:any) => {
+  const handleFile = (e: any) => {
     e.preventDefault();
-    
+
     if (e.target.files) {
       setFile(e.target.files[0]);
       console.log(file);
     }
   };
 
-    // stamptype
-    const handleStamps = (e: any) => {
-      // console.log(e.currentTarget.dataset);
-      const { type } = e.currentTarget.dataset;
-      let tmpArr = [...stamps];
-      tmpArr.push({ stampType: type });
-      setStamps(tmpArr);
-      console.log(tmpArr);
-    };
+  // stamptype
+  const handleStamps = (e: any) => {
+    // console.log(e.currentTarget.dataset);
+    const { type } = e.currentTarget.dataset;
+    let tmpArr = [...stamps];
+    tmpArr.push({ stampType: type });
+    setStamps(tmpArr);
+    console.log(tmpArr);
+  };
 
-    // 등록 onClick
+  useEffect(() => {
+    setRequestDto({
+      pet: { petName: pet },
+      title,
+      content,
+      stamps,
+    });
+  }, [pet, title, content, stamps]);
+
+  console.log(requestDto);
+
+  // 등록 onClick
   const submitDiaryForm = (e: any) => {
     e.preventDefault();
-    const requestDto = { title, content, stamps };
-    console.log(requestDto);
+    // const requestDto: any = { title, content, stamps };
+    // console.log(requestDto);
     const formData = new FormData();
-
+    console.log('22', requestDto);
     Array.from(file).map((file: any, key: number) => {
       formData.append('multipartFile', file);
     });
@@ -75,16 +104,16 @@ const DiaryWrite = ({ diaryId }: IProps) => {
       })
       .catch((err) => {
         console.error(err);
-      });   
-        // form 초기화
-        setTitle('');
-        setContent('');
-        setStamps({
-          WALK: false,
-          TREAT: false,
-          TOY: false,
-          TRAVEL: false
-        });
+      });
+    // form 초기화
+    // setTitle('');
+    // setContent('');
+    // setStamps({
+    //   WALK: false,
+    //   TREAT: false,
+    //   TOY: false,
+    //   TRAVEL: false,
+    // });
   };
 
   // 📌📌📌📌📌📌📌📌📌 230224 axios 요청 예시 📌📌📌📌📌📌📌📌📌
@@ -152,45 +181,49 @@ const DiaryWrite = ({ diaryId }: IProps) => {
             className="inputfield-content"
             placeholder="자유롭게 작성하세요:)"
             onChange={handleContent}
-          >
-          </textarea>
+          ></textarea>
         </div>
         <form>
-        <div className="write-photo">
-          <span>사진</span>
-          <form>
-          <label 
-            className="photo-label" 
-            htmlFor="profileImg"
-          ><img style={{ width: '40px' }} src="/images/add-photo.png" id="image" />
-          </label>
-          <input 
-            type="file" 
-            className="photo-input" 
-            accept="image/*"
-            multiple={true} 
-            id="profileImg"
-            onChange={handleFile}
-            required
-          ></input></form>
-        </div>
-
+          <div className="write-photo">
+            <span>사진</span>
+            <label className="photo-label" htmlFor="profileImg">
+              <img style={{ width: '40px' }} src="/images/add-photo.png" id="image" />
+            </label>
+            <input
+              type="file"
+              className="photo-input"
+              accept="image/*"
+              multiple={true}
+              id="profileImg"
+              onChange={handleFile}
+              required
+            />
+          </div>
         </form>
         <div className="write-stamp">
           <span>다시 봄 스탬프</span>
         </div>
         <div className="write-stamp-inner">
-        <img src="/images/stamp4.png" data-type={'WALK'} onClick={handleStamps}/>
-        <img src="/images/stamp1.png" data-type={'TREAT'} onClick={handleStamps}/>
-        <img src="/images/stamp3.png" data-type={'TOY'} onClick={handleStamps}/>
-        <img src="/images/stamp2.png" data-type={'TRAVEL'} onClick={handleStamps}/>
-        </div><br/><br/>
-        <div className="upload-btn">
-        <button type="submit" onClick={submitDiaryForm}>등록</button>
+          <img src="/images/stamp4.png" data-type={'WALK'} onClick={handleStamps} />
+          <img src="/images/stamp1.png" data-type={'TREAT'} onClick={handleStamps} />
+          <img src="/images/stamp3.png" data-type={'TOY'} onClick={handleStamps} />
+          <img src="/images/stamp2.png" data-type={'TRAVEL'} onClick={handleStamps} />
         </div>
+        <br />
+        <br />
+        <div className="upload-btn">
+          <button type="submit" onClick={submitDiaryForm}>
+            등록
+          </button>
+        </div>
+
         {/* input값 모두 받았는지 확인 */}
-        {JSON.stringify({
-        title, content, file, stamps })}
+        {/* {JSON.stringify({
+          title,
+          content,
+          file,
+          stamps,
+        })} */}
       </div>
     </DiaryWriteWrapper>
   );
