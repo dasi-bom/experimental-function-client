@@ -7,7 +7,11 @@ import { DiaryCardWrapper } from './styled';
 // axios(서버연결)
 import axios from 'axios';
 
-const DiaryCard = () => {
+interface IProps {
+  item: any;
+}
+
+const DiaryCard = ({ item }: IProps) => {
   const router = useRouter();
   const [active, setActive] = useState<boolean>(false);
 
@@ -19,19 +23,19 @@ const DiaryCard = () => {
     }
   };
 
-  // 수정 handle
-  const handleEditMode = (e: any) => {
-    setActive(!active);
-  };
+  // // 수정 handle
+  // const handleEditMode = (e: any) => {
+  //   setActive(!active);
+  // };
 
-  // 삭제 handle
-  const handleDelete = () => {
-      axios.delete(`/api/admin/hero?id=${props.match.params.id}`)
-        .then((response: { data: any; }) => {
-          console.log(response.data);
-          props.history.push('/heroes/hero'); // this.props.router.push('/heroes/hero'); 3.0.0+
-        });
-  };
+  // // 삭제 handle
+  // const handleDelete = () => {
+  //     axios.delete(`/api/admin/hero?id=${props.match.params.id}`)
+  //       .then((response: { data: any; }) => {
+  //         console.log(response.data);
+  //         props.history.push('/heroes/hero'); // this.props.router.push('/heroes/hero'); 3.0.0+
+  //       });
+  // };
 
   return (
     <DiaryCardWrapper>
@@ -41,8 +45,8 @@ const DiaryCard = () => {
         </div>
         <div className="content-wrap">
           <div className="content-inner">
-            <h3 className="title">단추처럼 생긴 코</h3>
-            <div className="diary-images" />
+            <h3 className="title">#단추처럼 #생긴 #코</h3>
+            <div className="diary-images" onClick={() => router.push(`/diary/${item.petId}`)}/>
             <p className="content">우리 곰곰이는 털도 매력이지만 코가 귀엽다</p>
           </div>
           <div className="bottom-wrap">

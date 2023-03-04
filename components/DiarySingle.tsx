@@ -1,12 +1,19 @@
 import React from 'react';
 
+// component
+import DiaryCard from './card';
+
 // style
 import { DiarySingleWrapper } from './diary/single/styled';
 
-const DiarySingle = () => {
+interface IProps {
+  item: any;
+}
+
+const DiarySingle = ({ item }: IProps) => {
   return (
     <DiarySingleWrapper>
-      <h1>일기 상세조회 페이지</h1>
+       <DiaryCard item={item} />
     </DiarySingleWrapper>
   );
 };

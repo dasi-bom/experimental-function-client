@@ -20,8 +20,8 @@ const DiaryWrite = ({ diaryId }: IProps) => {
   // state 선언
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [file, setFile] = useState([]);
-  const [stamptype, setStampType] = useState<any>([]);
+  const [file, setFile] = useState<any>([]);
+  const [stamps, setStamps] = useState<any>([]);
   
   // title
   const handleTitle = (e: any) => {
@@ -36,51 +36,50 @@ const DiaryWrite = ({ diaryId }: IProps) => {
   };
   
   // file
-  const handleFile = (e: any) => {
+  const handleFile = (e:any) => {
     e.preventDefault();
-    const formData = new FormData();
     
     if (e.target.files) {
-      const uploadFile = e.target.files[0];
-      formData.append('file', uploadFile);
-      setFile(uploadFile);
-      console.log(uploadFile);
-      // 서버로 보내기
-      axios.post('/api/admin/file', formData); 
+      setFile(e.target.files[0]);
+      console.log(file);
     }
   };
 
     // stamptype
-    const handleStamptype = (e: any) => {
+    const handleStamps = (e: any) => {
       // console.log(e.currentTarget.dataset);
       const { type } = e.currentTarget.dataset;
-      let tmpArr = [...stamptype];
+      let tmpArr = [...stamps];
       tmpArr.push({ stampType: type });
-      setStampType(tmpArr);
+      setStamps(tmpArr);
       console.log(tmpArr);
     };
 
     // 등록 onClick
-  const onClick = (e: any) => {
+  const submitDiaryForm = (e: any) => {
     e.preventDefault();
-    const sendForm = { title, content, file, stamptype };
-    console.log(sendForm);   
+    const requestDto = { title, content, stamps };
+    console.log(requestDto);
+    const formData = new FormData();
 
-    // 서버로 보내기
-    axios.post('/api/admin/file', sendForm)
-    .then((result: any) => {
-       console.log('일기 등록에 성공하셨습니다.');
-          console.log(result);
-       
-        })
-          .catch((error: any) => {
-       console.log('일기 등록에 실패하셨습니다.');
-          console.log(error);  
-        });
+    Array.from(file).map((file: any, key: number) => {
+      formData.append('multipartFile', file);
+    });
+
+    formData.append('requestDto', requestDto);
+
+    createDiary(formData)
+      .then((res) => {
+        console.log(res);
+        // if 요청 성공시 처리할 코드 else 요청 실패
+      })
+      .catch((err) => {
+        console.error(err);
+      });   
         // form 초기화
         setTitle('');
         setContent('');
-        setStampType({
+        setStamps({
           WALK: false,
           TREAT: false,
           TOY: false,
@@ -182,17 +181,17 @@ const DiaryWrite = ({ diaryId }: IProps) => {
           <span>다시 봄 스탬프</span>
         </div>
         <div className="write-stamp-inner">
-        <img src="/images/stamp4.png" data-type={'WALK'} onClick={handleStamptype}/>
-        <img src="/images/stamp1.png" data-type={'TREAT'} onClick={handleStamptype}/>
-        <img src="/images/stamp3.png" data-type={'TOY'} onClick={handleStamptype}/>
-        <img src="/images/stamp2.png" data-type={'TRAVEL'} onClick={handleStamptype}/>
+        <img src="/images/stamp4.png" data-type={'WALK'} onClick={handleStamps}/>
+        <img src="/images/stamp1.png" data-type={'TREAT'} onClick={handleStamps}/>
+        <img src="/images/stamp3.png" data-type={'TOY'} onClick={handleStamps}/>
+        <img src="/images/stamp2.png" data-type={'TRAVEL'} onClick={handleStamps}/>
         </div><br/><br/>
         <div className="upload-btn">
-        <button type="submit" onClick={onClick}>등록</button>
+        <button type="submit" onClick={submitDiaryForm}>등록</button>
         </div>
         {/* input값 모두 받았는지 확인 */}
         {JSON.stringify({
-        title, content, file, stamptype })}
+        title, content, file, stamps })}
       </div>
     </DiaryWriteWrapper>
   );
