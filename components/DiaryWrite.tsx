@@ -124,7 +124,7 @@ const DiaryWrite = ({ diaryId }: IProps) => {
   // };
 
   // return <>{diaryId ? <h1>일기 수정 페이지</h1> : <h1>일기 작성 페이지</h1>}</>;
-  
+
   return (
     <DiaryWriteWrapper>
       <div className="write-wrap">
@@ -133,15 +133,13 @@ const DiaryWrite = ({ diaryId }: IProps) => {
           <div className="user-bg1"></div>
           <span>곰곰</span>
         </div>
-        <div className="topic">
-          임보 동물과 함께 할 수 있는 나만의 놀이를 알려주세요~
-        </div>
+        <div className="topic">임보 동물과 함께 할 수 있는 나만의 놀이를 알려주세요~</div>
         <div className="write-title">
           <span>제목</span>
-          <input 
-            name="title"  
-            type="text" 
-            className="inputfield-title" 
+          <input
+            name="title"
+            type="text"
+            className="inputfield-title"
             placeholder="ex) 곰곰이와 0일째"
             onChange={handleTitle}
             required // 필수값
@@ -149,9 +147,9 @@ const DiaryWrite = ({ diaryId }: IProps) => {
         </div>
         <div className="write-content">
           <span>본문</span>
-          <textarea 
-            name="content" 
-            className="inputfield-content" 
+          <textarea
+            name="content"
+            className="inputfield-content"
             placeholder="자유롭게 작성하세요:)"
             onChange={handleContent}
           >
@@ -176,6 +174,7 @@ const DiaryWrite = ({ diaryId }: IProps) => {
             required
           ></input></form>
         </div>
+
         </form>
         <div className="write-stamp">
           <span>다시 봄 스탬프</span>

@@ -13,7 +13,7 @@ interface IProps {
 const DiarySingle = ({ item }: IProps) => {
   return (
     <DiarySingleWrapper>
-       <DiaryCard item={item} />
+      <DiaryCard item={item} />
     </DiarySingleWrapper>
   );
 };

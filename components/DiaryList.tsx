@@ -15,8 +15,8 @@ interface IProps {
 const DiaryList = ({ diaryList, cursor, petId }: IProps) => {
   return (
     <DiaryListWrapper>
- {/* <DiaryCard /> */}
- {diaryList && diaryList.length ? (
+      {/* <DiaryCard /> */}
+      {diaryList && diaryList.length ? (
         diaryList.map((item: any, key: number) => {
           <DiaryCard key={key} item={item} />;
         })
