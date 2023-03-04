@@ -9,6 +9,9 @@ import 'slick-carousel/slick/slick-theme.css';
 // style
 import { DiarySingleLetterListWrapper } from './styled';
 
+// kakao
+import useSNSShare from './useSNSShare';
+
 const DiarySingleLetterList = () => {
   const router = useRouter();
 
@@ -48,7 +51,11 @@ const DiarySingleLetterList = () => {
           : ''}
       </Slider>
       <div className="ios-share-img">
-        <img src="/images/ios-share.png" alt="" />
+        <img 
+          src="/images/ios-share.png" 
+          alt="카카오로 공유하기"
+          onClick={useSNSShare}
+        />
       </div>
       <div className="bottom-btn" onClick={() => router.push('/diary')}>
         <span>곰곰이 일기 다시보기</span>

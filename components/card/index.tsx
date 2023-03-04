@@ -1,8 +1,12 @@
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 
 // style
 import { DiaryCardWrapper } from './styled';
+
+// axios(서버연결)
+import axios from 'axios';
 
 interface IProps {
   item: any;
@@ -20,6 +24,20 @@ const DiaryCard = ({ item }: IProps) => {
     }
   };
 
+  // // 수정 handle
+  // const handleEditMode = (e: any) => {
+  //   setActive(!active);
+  // };
+
+  // // 삭제 handle
+  // const handleDelete = () => {
+  //     axios.delete(`/api/admin/hero?id=${props.match.params.id}`)
+  //       .then((response: { data: any; }) => {
+  //         console.log(response.data);
+  //         props.history.push('/heroes/hero'); // this.props.router.push('/heroes/hero'); 3.0.0+
+  //       });
+  // };
+
   return (
     <DiaryCardWrapper>
       <div className="card-wrap">
@@ -29,7 +47,8 @@ const DiaryCard = ({ item }: IProps) => {
         <div className="content-wrap">
           <div className="content-inner">
             <h3 className="title">#단추처럼 #생긴 #코</h3>
-            <div className="diary-images" onClick={() => router.push(`/diary/${item.petId}`)} />
+            <div className="diary-images" onClick={() => router.push(`/diary/${item.petId}`)}/>
+
             <p className="content">우리 곰곰이는 털도 매력이지만 코가 귀엽다</p>
           </div>
           <div className="bottom-wrap">
@@ -40,9 +59,9 @@ const DiaryCard = ({ item }: IProps) => {
               <div className="stamp" />
             </div>
             <div className="button-wrap">
-              <button>수정</button>
+              <button onClick={() => router.push('../DiaryWriteUpdate.tsx')}>수정</button>
               <span>/</span>
-              <button>삭제</button>
+              <button onClick={() => {}}>삭제</button>
             </div>
           </div>
         </div>
