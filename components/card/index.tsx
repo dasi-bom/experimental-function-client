@@ -1,9 +1,15 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 // style
 import { DiaryCardWrapper } from './styled';
 
-const DiaryCard = () => {
+interface IProps {
+  item: any;
+}
+
+const DiaryCard = ({ item }: IProps) => {
+  const router = useRouter();
   const [active, setActive] = useState<boolean>(false);
 
   const stampHandler = () => {
@@ -22,8 +28,8 @@ const DiaryCard = () => {
         </div>
         <div className="content-wrap">
           <div className="content-inner">
-            <h3 className="title">단추처럼 생긴 코</h3>
-            <div className="diary-images" />
+            <h3 className="title">#단추처럼 #생긴 #코</h3>
+            <div className="diary-images" onClick={() => router.push(`/diary/${item.petId}`)} />
             <p className="content">우리 곰곰이는 털도 매력이지만 코가 귀엽다</p>
           </div>
           <div className="bottom-wrap">
