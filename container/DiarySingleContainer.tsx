@@ -10,7 +10,7 @@ import { getDiarySingle } from 'services/diary';
 
 const DiarySingleContainer = () => {
   const router = useRouter();
-  const [diaryId, setDiaryId] = useState<any>();
+  const [diaryId, setDiaryId] = useState<any>(1);
   const [item, setItem] = useState<any>();
 
   useEffect(() => {
@@ -18,13 +18,18 @@ const DiarySingleContainer = () => {
       setDiaryId(Number(router.query.diary_id));
     }
 
-    // getDiarySingle({ diaryId })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
+    getDiarySingle({ diaryId })
+      .then((res) => {
+        if (res.status === 200) {
+          const { data } = res;
+          setItem(data);
+        } else {
+          console.log('getDiarySingle fail');
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, [router.query]);
 
   return (

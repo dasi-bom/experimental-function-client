@@ -4,9 +4,6 @@ import React, { useState } from 'react';
 // style
 import { DiaryCardWrapper } from './styled';
 
-// axios(서버연결)
-import axios from 'axios';
-
 interface IProps {
   item: any;
 }
@@ -41,14 +38,17 @@ const DiaryCard = ({ item }: IProps) => {
     <DiaryCardWrapper>
       <div className="card-wrap">
         <div className="date">
-          <span>23.01.30 18:00</span>
+          <span>{item?.createdAt}</span>
         </div>
         <div className="content-wrap">
           <div className="content-inner">
-            <h3 className="title">#단추처럼 #생긴 #코</h3>
+            <h3 className="title">
+              {/* {`#${item?.petName}`} */}
+              {item?.title}
+            </h3>
             <div className="diary-images" onClick={() => router.push(`/diary/${item.petId}`)} />
 
-            <p className="content">우리 곰곰이는 털도 매력이지만 코가 귀엽다</p>
+            <p className="content" dangerouslySetInnerHTML={{ __html: item?.content }} />
           </div>
           <div className="bottom-wrap">
             <div

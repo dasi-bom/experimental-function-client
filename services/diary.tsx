@@ -13,9 +13,21 @@ export interface ICreateDiary {
   multipartFile: any;
 }
 
+// 일기 작성
 export const createDiary = async (args: any) => {
   const axios = initAxios();
-  return await axios.post(`${prefix}/save`, args, {
+  return await axios.post('/diary/save/text', {
+    pet: args.pet,
+    title: args.title,
+    content: args.content,
+    stamps: args.stamps,
+  });
+};
+
+// 이미지 업로드
+export const uploadFile = async (args: any) => {
+  const axios = initAxios();
+  return await axios.post(`${prefix}/save/file`, args, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 };

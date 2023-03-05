@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const nameSpace = '';
-export const baseURL = 'https://3.34.234.124:8080';
+export const baseURL = 'http://3.34.234.124:8080';
 
 const initAxios = () => {
   const defaultClient = axios.create({
