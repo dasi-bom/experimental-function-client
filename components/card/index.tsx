@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 
 // style
 import { DiaryCardWrapper } from './styled';
@@ -10,15 +10,6 @@ interface IProps {
 
 const DiaryCard = ({ item }: IProps) => {
   const router = useRouter();
-  const [active, setActive] = useState<boolean>(false);
-
-  const stampHandler = () => {
-    if (!active) {
-      setActive(true);
-    } else {
-      setActive(false);
-    }
-  };
 
   // // 수정 handle
   // const handleEditMode = (e: any) => {
@@ -42,23 +33,21 @@ const DiaryCard = ({ item }: IProps) => {
         </div>
         <div className="content-wrap">
           <div className="content-inner">
-            <h3 className="title">
-              {/* {`#${item?.petName}`} */}
-              {item?.title}
-            </h3>
-            <div className="diary-images" onClick={() => router.push(`/diary/${item.petId}`)} />
+            <h3 className="title">{item?.title}</h3>
+            <div
+              className="diary-images"
+              style={{ backgroundImage: 'url(../../images/lucky.jpg)' }}
+              onClick={() => router.push(`/diary/${item.diaryId}`)}
+            />
 
             <p className="content" dangerouslySetInnerHTML={{ __html: item?.content }} />
           </div>
           <div className="bottom-wrap">
-            <div
-              className={active ? 'active stamp-wrap' : 'stamp-wrap'}
-              // onClick={stampHandler}
-            >
-              <div className="stamp" />
+            <div className="stamp-wrap">
+              <div className="stamp" style={{ backgroundImage: 'url(../../images/stamp1.png)' }} />
             </div>
             <div className="button-wrap">
-              <button onClick={() => router.push('../DiaryWriteUpdate.tsx')}>수정</button>
+              <button onClick={() => router.push(`/diary/write/${item.diaryId}`)}>수정</button>
               <span>/</span>
               <button onClick={() => {}}>삭제</button>
             </div>
