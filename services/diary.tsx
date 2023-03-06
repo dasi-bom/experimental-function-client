@@ -2,6 +2,12 @@ import initAxios from './defaultClient';
 
 const prefix = '/diary';
 
+// tmpId 발급
+export const getTmpId = async (args: any) => {
+  const axios = initAxios();
+  return await axios.get(`${prefix}/issue/id`, {});
+};
+
 // 일기 작성
 export interface ICreateDiary {
   requestDto: {
@@ -68,7 +74,7 @@ export const getDiaryList = async (args: IGetDiaryList) => {
   return await axios.get(`${prefix}/list`, {
     params: {
       cursor: args.cursor,
-      petId: args.petId,
+      // petId: args.petId,
     },
   });
 };
