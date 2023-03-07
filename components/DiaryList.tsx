@@ -8,18 +8,13 @@ import { DiaryListWrapper } from './diary/list/styled';
 
 interface IProps {
   diaryList: any;
-  cursor: number;
-  petId: number;
 }
 
-const DiaryList = ({ diaryList, cursor, petId }: IProps) => {
+const DiaryList = ({ diaryList }: IProps) => {
   return (
     <DiaryListWrapper>
-      {/* <DiaryCard /> */}
       {diaryList && diaryList.length ? (
-        diaryList.map((item: any, key: number) => {
-          <DiaryCard key={key} item={item} />;
-        })
+        diaryList.map((item: any, key: number) => <DiaryCard key={key} item={item} />)
       ) : (
         <></>
       )}

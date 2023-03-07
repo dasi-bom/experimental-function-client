@@ -33,7 +33,7 @@ export const DiaryCardWrapper = styled.div`
     color: #545454;
   }
   .diary-images {
-    background-image: url('../../images/lucky.jpg');
+    /* background-image: url('../../images/lucky.jpg'); */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -60,7 +60,7 @@ export const DiaryCardWrapper = styled.div`
     margin-top: 10px;
   }
   .stamp {
-    background-image: url('../../images/stamp1.png');
+    /* background-image: url('../../images/stamp1.png'); */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
