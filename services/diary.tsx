@@ -85,18 +85,25 @@ export const deleteDiary = async (args: IDiaryId) => {
   return await axios.delete(`${prefix}/${args.diaryId}`, {});
 };
 
-// 다시 보기
-interface IGetAgainDiary {
-  petId: number;
-  stampType: 'WALK' | 'TREAT' | 'TOY';
+// 임시보호 종료
+interface IFinishProtection {
+  pet: { petName: string };
 }
 
-export const getAgainDiary = async (args: IGetAgainDiary) => {
+export const finishProtection = async (args: IFinishProtection) => {
   const axios = initAxios();
-  return await axios.get(`${prefix}/again`, {
+  return await axios.post('/protection/end', {
+    pet: args.pet,
+  });
+};
+
+// 다시 보기
+export const getAgainDiary = async (args: any) => {
+  const axios = initAxios();
+  return await axios.get(`${prefix}/list/record`, {
     params: {
-      petId: args.petId,
       stampType: args.stampType,
+      petName: args.petName,
     },
   });
 };
