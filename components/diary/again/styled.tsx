@@ -58,7 +58,11 @@ export const DiarySingleAgainWrapper = styled.div`
   }
 
   .step-btn {
-    margin-top: 80px;
+    font-size: 16px;
+    margin-top: 60px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 20px;
     cursor: pointer;
   }
 
