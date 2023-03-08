@@ -5,6 +5,10 @@ import { ThemeProvider } from 'styled-components';
 import GlobalStyle from 'styles/global-styles';
 import theme from 'styles/theme';
 
+// toast
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // 모든 페이지 컴포넌트를 감싸고 있는 공통 레이아웃(가장 최초로 실행됨)
 // 이후 _document.tsx가 실행
 function MyApp({ Component, pageProps }: AppProps) {
@@ -16,6 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>다시, 봄</title>
       </Head>
+      <ToastContainer />
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <Component {...pageProps} />

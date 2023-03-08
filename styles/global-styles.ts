@@ -35,6 +35,10 @@ ${reset}
       font-size: 10px;
     }
   }
+
+  .Toastify__toast-container {
+  z-index: 999999999 !important;
+}
 `;
 
 export default GlobalStyle;
