@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 export const DiarySingleLetterWrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: #f2f9ff;
-  padding-top: 80px;
+  padding-top: 40px;
 
   .letter-wrap {
     width: 325px;
@@ -14,7 +14,7 @@ export const DiarySingleLetterWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 auto;
+    margin: 50px auto;
     padding: 60px 20px;
   }
 

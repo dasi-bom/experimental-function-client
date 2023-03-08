@@ -7,6 +7,8 @@ export const HomeWrapper = styled.div`
     background-color: #f2f9ff;
     padding-top: 200px;
   }
+  .profile-btn-inner {
+  }
   .profile-inner {
     width: 100%;
     height: 200px;
@@ -27,6 +29,25 @@ export const HomeWrapper = styled.div`
         font-weight: 600;
       }
     }
+  }
+  .finish-btn {
+    width: 200px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto;
+
+    font-size: 24px;
+    font-family: 'JejuGothic';
+    font-style: normal;
+    font-weight: 600;
+    background-color: #fff;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  .finish-btn:hover {
+    color: gray;
   }
   .bg1 {
     background-image: url('../../images/lucky.jpg');
