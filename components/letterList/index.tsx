@@ -12,7 +12,13 @@ import { DiarySingleLetterListWrapper } from './styled';
 // kakao
 import useSNSShare from './useSNSShare';
 
-const DiarySingleLetterList = () => {
+interface IProps {
+  petInfo: any;
+  type: string;
+  name: string;
+}
+
+const DiarySingleLetterList = ({ petInfo, type, name }: IProps) => {
   const router = useRouter();
 
   const settings = {
@@ -21,45 +27,47 @@ const DiarySingleLetterList = () => {
     speed: 500,
   };
 
-  const tmpArr = Array.from({ length: 5 }, (_: any, key: number) => {
-    return {
-      date: `23.01.25 17:0${key}`,
-      title: `#곰곰이와 산책했던 시간${key + 1}`,
-      content:
-        '오늘 곰곰이랑 양평 강아지 놀이터에 갔다. 곰곰이가 다른 강아지랑 잘 놀아서 얼마나 좋던지!😊',
-    };
-  });
-
   return (
     <DiarySingleLetterListWrapper>
       <div className="title-wrap">
-        <h3>곰곰이와 산책했던 시간</h3>
+        <h3>
+          {name === 'gomgom'
+            ? '곰곰'
+            : name === 'dangdang'
+            ? '당당'
+            : name === 'bongbong'
+            ? '봉봉'
+            : ''}
+          이와{' '}
+          {type === 'WALK' ? '산책' : type === 'TREAT' ? '간식' : type === 'TOY' ? '장난감' : ''}
+          했던 시간
+        </h3>
       </div>
-      <Slider {...settings}>
-        {tmpArr && tmpArr.length
-          ? tmpArr.map((item: any, key: number) => (
-              <div key={key} className="slide-wrap carousel">
-                <p className="date">{item.date}</p>
-                <p className="title">{item.title}</p>
-                <div className="content-img" />
+      {petInfo && petInfo.length > 0 && (
+        <>
+          <Slider {...settings}>
+            {petInfo && petInfo.length
+              ? petInfo.map((item: any, key: number) => (
+                  <div key={key} className="slide-wrap carousel">
+                    <p className="date">{item.date}</p>
+                    <p className="title">{item.title}</p>
+                    <div className="content-img" />
 
-                <p className="content">{item.content}</p>
+                    <p className="content">{item.content}</p>
 
-                <img src="/images/share.png" alt="" />
-              </div>
-            ))
-          : ''}
-      </Slider>
-      <div className="ios-share-img">
-        <img 
-          src="/images/ios-share.png" 
-          alt="카카오로 공유하기"
-          onClick={useSNSShare}
-        />
-      </div>
-      <div className="bottom-btn" onClick={() => router.push('/diary')}>
-        <span>곰곰이 일기 다시보기</span>
-      </div>
+                    <img src="/images/share.png" alt="" />
+                  </div>
+                ))
+              : ''}
+          </Slider>
+          <div className="ios-share-img">
+            <img src="/images/ios-share.png" alt="카카오로 공유하기" onClick={useSNSShare} />
+          </div>
+          <div className="bottom-btn" onClick={() => router.push('/diary')}>
+            <span>곰곰이 일기 다시보기</span>
+          </div>
+        </>
+      )}
     </DiarySingleLetterListWrapper>
   );
 };
