@@ -40,6 +40,7 @@ const DiaryWrite = ({
             placeholder="ex) 곰곰이와 0일째"
             onChange={diaryFormHandler}
             required // 필수값
+            value={diaryForm?.title}
           />
         </div>
         <div className="write-content">
@@ -49,6 +50,7 @@ const DiaryWrite = ({
             className="inputfield-content"
             placeholder="자유롭게 작성하세요:)"
             onChange={diaryFormHandler}
+            value={diaryForm?.content}
           ></textarea>
         </div>
 
@@ -82,13 +84,6 @@ const DiaryWrite = ({
         <div className="upload-btn">
           <button onClick={submitDiaryForm}>등록</button>
         </div>
-
-        {/* input값 모두 받았는지 확인 */}
-        {JSON.stringify({
-          title: diaryForm.title,
-          content: diaryForm.content,
-          stamps,
-        })}
       </div>
     </DiaryWriteWrapper>
   );
