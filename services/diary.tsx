@@ -10,6 +10,7 @@ export const getTmpId = async (args: any) => {
 
 // 일기 작성
 export interface ICreateDiary {
+  diaryId: number;
   requestDto: {
     pet: { petName: string };
     title: string;
@@ -22,7 +23,7 @@ export interface ICreateDiary {
 // 일기 작성
 export const createDiary = async (args: any) => {
   const axios = initAxios();
-  return await axios.post('/diary/save/text', {
+  return await axios.post(`/diary/save/${args.diaryId}/text`, {
     pet: args.pet,
     title: args.title,
     content: args.content,
@@ -43,6 +44,7 @@ interface IUpdateDiary {
   diaryId: number;
   title?: string;
   content?: string;
+  stampTypes?: [];
 }
 
 export const updateDiary = async (args: IUpdateDiary) => {
@@ -50,6 +52,7 @@ export const updateDiary = async (args: IUpdateDiary) => {
   return await axios.patch(`${prefix}/${args.diaryId}`, {
     title: args.title,
     content: args.content,
+    stampTypes: args.stampTypes,
   });
 };
 
