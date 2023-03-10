@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 // components
 import Layout from 'components/common/Layout/Layout';
 import DiaryList from 'components/DiaryList';
 
 // services
-import { getDiaryList, getTmpId } from '../services/diary';
+import { deleteDiary, getDiaryList, getTmpId } from '../services/diary';
+import { toast } from 'react-toastify';
 
 const DiaryListContainer = () => {
+  const router = useRouter();
+
   const [diaryList, setDiaryList] = useState<any>([]);
   const [cursor, setCursor] = useState<any>();
 
@@ -69,20 +73,30 @@ const DiaryListContainer = () => {
   };
 
   // 맨 아래까지 스크롤 할 경우 다음 일기 리스트 호출
-  useEffect(() => {
-    getDiary();
-
+  const recallDiaryList = () => {
     if (isUpdate && pageY >= scrollHeight) {
       diaryList.map((item: any, key: number) => {
         if (key === diaryList.length - 1) {
-          console.log('ok');
           setCursor(item.diaryId);
 
           getDiaryList({ cursor })
             .then((res) => {
               if (res.status === 200) {
                 const data = res.data.content;
-                setDiaryList([...diaryList, ...data]);
+                let tmpArr = [...diaryList]; // diaryList copy
+                tmpArr = [...diaryList, ...data];
+
+                // 리스트 내 중복 값 제거
+                const newArr = tmpArr.filter((item: any, key: number) => {
+                  return (
+                    tmpArr.findIndex((ele: any, idx: number) => {
+                      return item.diaryId === ele.diaryId;
+                    }) === key
+                  );
+                });
+
+                // 중복 값 제거된 배열을 set
+                setDiaryList(newArr);
               }
             })
             .catch((err) => {
@@ -91,13 +105,33 @@ const DiaryListContainer = () => {
         }
       });
     }
+  };
+
+  useEffect(() => {
+    getDiary();
+    recallDiaryList();
   }, [isUpdate, cursor]);
 
-  // console.log(diaryList);
+  // 일기 삭제
+  const removeDiary = (diaryId: number) => {
+    deleteDiary({ diaryId })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          // 정상적으로 삭제가 되면 새로고침
+          router.reload(); // 📌 삭제 성공시 리스트 호출을 다시 하면 되는데 현재 로직으로는 새로고침 사용(추후에 수정 필요)
+        } else {
+          toast.error('관리자에게 문의해주세요.');
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   return (
     <Layout>
-      <DiaryList diaryList={diaryList} />
+      <DiaryList diaryList={diaryList} removeDiary={removeDiary} />
     </Layout>
   );
 };

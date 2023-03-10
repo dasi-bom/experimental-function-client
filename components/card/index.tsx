@@ -6,9 +6,10 @@ import { DiaryCardWrapper } from './styled';
 
 interface IProps {
   item: any;
+  removeDiary: (diaryId: number) => void;
 }
 
-const DiaryCard = ({ item }: IProps) => {
+const DiaryCard = ({ item, removeDiary }: IProps) => {
   const router = useRouter();
 
   // // 수정 handle
@@ -37,7 +38,11 @@ const DiaryCard = ({ item }: IProps) => {
             <div
               className="diary-images"
               style={{ backgroundImage: 'url(../../images/lucky.jpg)' }}
-              onClick={() => router.push(`/diary/${item.diaryId}`)}
+              onClick={() =>
+                router.push(
+                  `/diary/${router.query.diary_id ? router.query.diary_id : item.diaryId}`
+                )
+              }
             />
 
             <p className="content" dangerouslySetInnerHTML={{ __html: item?.content }} />
@@ -49,7 +54,8 @@ const DiaryCard = ({ item }: IProps) => {
             <div className="button-wrap">
               <button onClick={() => router.push(`/diary/write/${item.diaryId}`)}>수정</button>
               <span>/</span>
-              <button onClick={() => {}}>삭제</button>
+              {/* 각 게시물마다 있는 고유의 diaryId를 이용해서 게시물 삭제 */}
+              <button onClick={() => removeDiary(item.diaryId)}>삭제</button>
             </div>
           </div>
         </div>
