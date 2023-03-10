@@ -16,20 +16,20 @@ const DiarySingleContainer = () => {
   useEffect(() => {
     if (router.query.diary_id) {
       setDiaryId(Number(router.query.diary_id));
-    }
+      getDiarySingle({ diaryId: Number(router.query.diary_id) })
+        .then((res) => {
+          if (res.status === 200) {
+            const { data } = res;
 
-    getDiarySingle({ diaryId })
-      .then((res) => {
-        if (res.status === 200) {
-          const { data } = res;
-          setItem(data);
-        } else {
-          console.log('getDiarySingle fail');
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+            setItem(data);
+          } else {
+            console.log('getDiarySingle fail');
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   }, [router.query]);
 
   return (
