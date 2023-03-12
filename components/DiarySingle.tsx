@@ -8,12 +8,13 @@ import { DiarySingleWrapper } from './diary/single/styled';
 
 interface IProps {
   item: any;
+  removeDiary: (diaryId: number) => void;
 }
 
-const DiarySingle = ({ item }: IProps) => {
+const DiarySingle = ({ item, removeDiary }: IProps) => {
   return (
     <DiarySingleWrapper>
-      <DiaryCard item={item} />
+      <DiaryCard item={item} removeDiary={removeDiary} />
     </DiarySingleWrapper>
   );
 };

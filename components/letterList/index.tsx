@@ -37,40 +37,40 @@ const DiarySingleLetterList = ({ petInfo, type, name }: IProps) => {
     if (window.Kakao === undefined) {
       return;
     }
-  
+
     const kakao = window.Kakao;
-  
+
     // 인증이 안되어 있는 경우, 인증한다.
     if (!kakao.isInitialized()) {
       kakao.init('19ef6355b4d2cb8afc9c439c165794be');
       console.log(kakao.isInitialized());
     }
-  
+
     // 메시지 템플릿 활용
-      window.Kakao.Link.createCustomButton({
-        container: '#kakao-link-btn',
-        templateId: 90948,
-        templateArgs: {
-          userId: `${userId}`,
-        },
-      });
+    window.Kakao.Link.createCustomButton({
+      container: '#kakao-link-btn',
+      templateId: 90948,
+      templateArgs: {
+        userId: `${userId}`,
+      },
+    });
+  };
+  const onShareKakaoClick = () => {
+    // shareToKakaoTalk(userId);
+  };
+
+  // 카카오 sdk 선언
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
     };
-    const onShareKakaoClick = () => {
-      shareToKakaoTalk(userId);
-    };
-
-    // 카카오 sdk 선언
-      useEffect(() => {
-        const script = document.createElement('script');
-        script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
-        script.async = true;
-
-        document.body.appendChild(script);
-
-        return () => {
-        document.body.removeChild(script);
-        };
-      }, []);
+  }, []);
 
   return (
     <DiarySingleLetterListWrapper>
@@ -106,11 +106,12 @@ const DiarySingleLetterList = ({ petInfo, type, name }: IProps) => {
               : ''}
           </Slider>
           <div className="ios-share-img">
-            <img 
-              id="kakao-link-btn" 
-              src="/images/ios-share.png" 
+            <img
+              id="kakao-link-btn"
+              src="/images/ios-share.png"
               alt="카카오톡 공유하기"
-              onClick={onShareKakaoClick}/>
+              onClick={onShareKakaoClick}
+            />
           </div>
           <div className="bottom-btn" onClick={() => router.push('/diary')}>
             <span>곰곰이 일기 다시보기</span>
