@@ -13,16 +13,17 @@ interface IProps {
   petInfo: any;
   type: string;
   name: string;
+  doKakaoShare: () => void;
 }
 
 // 카카오 SDK는 window 객체에 전역으로 추가되니 TS를 위해 선언
-declare global {
-  interface Window {
-    Kakao: any;
-  }
-}
+// declare global {
+//   interface Window {
+//     Kakao: any;
+//   }
+// }
 
-const DiarySingleLetterList = ({ petInfo, type, name }: IProps) => {
+const DiarySingleLetterList = ({ petInfo, type, name, doKakaoShare }: IProps) => {
   const router = useRouter();
 
   const settings = {
@@ -32,45 +33,45 @@ const DiarySingleLetterList = ({ petInfo, type, name }: IProps) => {
   };
 
   // 카카오톡 공유하기
-  const shareToKakaoTalk = (userId: any) => {
-    // @ts-ignore
-    if (window.Kakao === undefined) {
-      return;
-    }
+  // const shareToKakaoTalk = (userId: any) => {
+  //   // @ts-ignore
+  //   if (window.Kakao === undefined) {
+  //     return;
+  //   }
 
-    const kakao = window.Kakao;
+  //   const kakao = window.Kakao;
 
-    // 인증이 안되어 있는 경우, 인증한다.
-    if (!kakao.isInitialized()) {
-      kakao.init('19ef6355b4d2cb8afc9c439c165794be');
-      console.log(kakao.isInitialized());
-    }
+  //   // 인증이 안되어 있는 경우, 인증한다.
+  //   if (!kakao.isInitialized()) {
+  //     kakao.init('19ef6355b4d2cb8afc9c439c165794be');
+  //     console.log(kakao.isInitialized());
+  //   }
 
-    // 메시지 템플릿 활용
-    window.Kakao.Link.createCustomButton({
-      container: '#kakao-link-btn',
-      templateId: 90948,
-      templateArgs: {
-        userId: `${userId}`,
-      },
-    });
-  };
-  const onShareKakaoClick = () => {
-    // shareToKakaoTalk(userId);
-  };
+  //   // 메시지 템플릿 활용
+  //   window.Kakao.Link.createCustomButton({
+  //     container: '#kakao-link-btn',
+  //     templateId: 90948,
+  //     templateArgs: {
+  //       userId: `${userId}`,
+  //     },
+  //   });
+  // };
+  // const onShareKakaoClick = () => {
+  //   // shareToKakaoTalk(userId);
+  // };
 
   // 카카오 sdk 선언
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
-    script.async = true;
+  // useEffect(() => {
+  //   const script = document.createElement('script');
+  //   script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
+  //   script.async = true;
 
-    document.body.appendChild(script);
+  //   document.body.appendChild(script);
 
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
+  //   return () => {
+  //     document.body.removeChild(script);
+  //   };
+  // }, []);
 
   return (
     <DiarySingleLetterListWrapper>
@@ -110,7 +111,8 @@ const DiarySingleLetterList = ({ petInfo, type, name }: IProps) => {
               id="kakao-link-btn"
               src="/images/ios-share.png"
               alt="카카오톡 공유하기"
-              onClick={onShareKakaoClick}
+              // onClick={onShareKakaoClick}
+              onClick={doKakaoShare}
             />
           </div>
           <div className="bottom-btn" onClick={() => router.push('/diary')}>
