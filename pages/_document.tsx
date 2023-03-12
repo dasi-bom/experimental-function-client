@@ -31,7 +31,10 @@ export default class Hello extends Document {
   render() {
     return (
       <Html>
-        <Head></Head>
+        <Head>
+          {/* javascript SDK 추가 */}
+          <script defer src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+        </Head>
         <body>
           <Main />
           <NextScript />

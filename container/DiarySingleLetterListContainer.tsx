@@ -33,7 +33,6 @@ const DiarySingleLetterListContainer = () => {
         petName,
       })
         .then((res) => {
-          console.log(res.data);
           if (res.status === 200) {
             setPetInfo(res.data);
           }
@@ -44,9 +43,34 @@ const DiarySingleLetterListContainer = () => {
     }
   }, [stampType, petName]);
 
+  // 카카오톡 공유
+  const doKakaoShare = () => {
+    const { Kakao, location } = window;
+    Kakao.Link.sendDefault({
+      objectType: 'feed',
+      buttonTitle: '다시 보기',
+      content: {
+        title: petInfo[0]?.title,
+        description: petInfo[0]?.content,
+        imageUrl: '../public/images/lucky.jpg',
+        link: {
+          mobileWebUrl: window.location.href,
+          webUrl: window.location.href,
+        },
+      },
+    });
+  };
+
+  // console.log(petInfo);
+
   return (
     <Layout>
-      <DiarySingleLetterList petInfo={petInfo} type={type} name={name} />
+      <DiarySingleLetterList
+        petInfo={petInfo}
+        type={type}
+        name={name}
+        doKakaoShare={doKakaoShare}
+      />
     </Layout>
   );
 };
