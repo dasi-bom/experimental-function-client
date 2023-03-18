@@ -156,7 +156,7 @@ const DiaryWriteContainer = () => {
         console.log(res);
         if (res.status === 200) {
           // 작성 성공시 일기 리스트 페이지로 이동
-          router.push('/diary/list');
+          router.push('/diary');
         }
       })
       .catch((err) => {
